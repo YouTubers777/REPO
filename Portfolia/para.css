@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 48px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #eee;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.paragraph-card {
+  background-color: #ffffffee;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.paragraph-card p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #333;
+  text-align: justify;
+}

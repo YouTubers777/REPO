@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emon Khan | Portfolio</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      color: #e0e0e0;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    header {
+      background-color: #111;
+      padding: 2rem 0;
+      text-align: center;
+      border-bottom: 3px solid #0f0;
+      box-shadow: 0 4px 12px rgba(0, 255, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: #0f0;
+      margin: 0;
+      text-shadow: 0 0 8px #00ff00;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      margin-top: 0.5rem;
+      color: #aaffaa;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    nav ul li a {
+      color: #0f0;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      box-shadow: 0 0 8px #0f0 inset;
+      user-select: none;
+    }
+
+    nav ul li a:hover,
+    nav ul li a:focus-visible {
+      background-color: #0f0;
+      color: #000;
+      outline: none;
+      box-shadow: 0 0 15px #0f0;
+    }
+
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid #333;
+    }
+
+    h2 {
+      font-size: 2.4rem;
+      color: #0f0;
+      border-left: 6px solid #0f0;
+      padding-left: 12px;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 6px #0f0;
+    }
+
+    .profile-pic {
+      width: 160px;
+      border-radius: 50%;
+      border: 3px solid #0f0;
+      margin-bottom: 1rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    /* Skills list as grid */
+    .skills-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      max-width: 600px;
+      color: #aaffaa;
+      font-weight: 600;
+    }
+
+    .skills-list li {
+      background-color: #122;
+      padding: 12px 16px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0f0 inset;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .skills-list li:hover {
+      background-color: #1a2a1a;
+    }
+
+    /* Projects */
+    .project {
+      background-color: #111;
+      border: 1.5px solid #0f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 0 15px #0f0 inset;
+      transition: transform 0.3s ease;
+    }
+    .project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px #00ff00;
+    }
+    .project h3 {
+      margin-top: 0;
+      color: #0f0;
+      text-shadow: 0 0 6px #0f0;
+    }
+    .project p {
+      color: #aaffaa;
+      margin-bottom: 0.6rem;
+    }
+    .project a {
+      color: #0f0;
+      text-decoration: underline;
+      font-weight: 700;
+      user-select: none;
+    }
+    .project a:hover,
+    .project a:focus-visible {
+      color: #00ff00;
+      outline: none;
+      text-decoration: none;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    /* Contact Form */
+    form {
+      max-width: 450px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea, button {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #122;
+      color: #cfc;
+      box-shadow: inset 0 0 8px #0f0;
+      transition: background-color 0.3s ease;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      background-color: #1a2a1a;
+      outline: 2px solid #0f0;
+      box-shadow: 0 0 12px #0f0;
+    }
+    button {
+      background-color: #0f0;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.15s ease;
+      box-shadow: 0 4px 8px rgb(0 255 0 / 0.6);
+      user-select: none;
+    }
+    button:hover,
+    button:focus-visible {
+      background-color: #4f4;
+      outline: none;
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: translateY(0);
+      background-color: #7f7;
+    }
+
+    /* Social links */
+    .social {
+      max-width: 400px;
+      margin: 2rem auto 0;
+      text-align: center;
+      color: #0f0;
+    }
+    .social p {
+      margin: 0.4rem 0;
+    }
+    .social a {
+      color: #0f0;
+      text-decoration: underline;
+      font-weight: 700;
+      user-select: none;
+    }
+    .social a:hover,
+    .social a:focus-visible {
+      color: #00ff00;
+      outline: none;
+      text-shadow: 0 0 10px #0f0;
+      text-decoration: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 1.5rem 0;
+      border-top: 3px solid #0f0;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      nav ul {
+        gap: 1rem;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      .skills-list {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+      .project {
+        padding: 1rem;
+      }
+      form {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Emon Khan</h1>
+      <p>Hacker | Web Developer | Student</p>
+      <nav aria-label="Primary navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="Resume.html">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="container" tabindex="-1">
+      <h2>About Me</h2>
+      <img src="Profile-Image.webp" alt="Photo of Emon Khan" class="profile-pic" />
+      <p>Hello! I'm Emon Khan, a 13-year-old passionate student at Vertex Academy School & College. I'm diving deep into the world of technology — learning web development, game creation, and ethical hacking. I love exploring new tools and building digital things that matter.</p>
+    </section>
+
+    <section id="skills" class="container" tabindex="-1">
+      <h2>Skills</h2>
+      <ul class="skills-list" aria-label="List of skills">
+        <li>HTML (Beginner)</li>
+        <li>CSS (Beginner)</li>
+        <li>Learning JavaScript</li>
+        <li>Basic Game Development</li>
+        <li>Microsoft Word & PowerPoint</li>
+        <li>Ethical Hacking (Beginner)</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="container" tabindex="-1">
+      <h2>Projects</h2>
+      <article class="project" tabindex="0">
+        <h3>Personal Website</h3>
+        <p>A responsive website built using HTML and CSS.</p>
+        <a href="https://emonpersonal.xyz/" target="_blank" rel="noopener noreferrer">Visit Website</a>
+      </article>
+
+      <article class="project" tabindex="0">
+        <h3>Stimulation Clicker</h3>
+        <p>An interactive game hosted on my personal site.</p>
+      </article>
+
+      <article class="project" tabindex="0">
+        <h3>Home Server Setup</h3>
+        <p>I set up a Linux-based home server with Apache, Samba, and Cockpit for web hosting and file sharing.</p>
+      </article>
+    </section>
+
+    <section id="contact" class="container" tabindex="-1">
+      <h2>Contact Me</h2>
+      <form action="contact.php" method="POST" aria-label="Contact form">
+        <input type="text" name="name" placeholder="Your Name" required aria-required="true" />
+        <input type="email" name="email" placeholder="Your Email" required aria-required="true" />
+        <textarea name="message" rows="5" placeholder="Your Message" required aria-required="true"></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+
+      <div class="social" aria-label="Social and contact information">
+        <p>Email: <a href="mailto:emonkk06@emonpersonal.xyz">emonkk06@emonpersonal.xyz</a></p>
+        <p>Phone: <a href="tel:+8801609255689">+8801609255689</a></p>
+        <p><a href="https://www.facebook.com/profile.php?id=100094195844169" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+        <p><a href="https://x.com/Emon452432" target="_blank" rel="noopener noreferrer">Twitter</a></p>
+        <p><a href="Resume.html">My Resume</a></p>
+        <p><a href="ProfileCard.html">My Profile Card</a></p>
+        <p><a href="comments.php">Comments</a></p>
+        <p><a href="MS.html">My Self</a></p>
+        <p><a href="https://drive.google.com/file/d/1FgGK01BYBjkXa7QtFdrDCtDup6XGnmhK/view">Secert Document</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hacker Inc. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
