@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Google Tag Manager -->
+  <script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-K748CDQV');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <link rel="icon" type="image/png" href="Portfolia/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to My Site</title>
+  <style>
+    /* Reset & base */
+    * { box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #2980b9, #6dd5fa); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-x: hidden; }
+
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; animation: fadeIn 1.8s ease forwards; filter: drop-shadow(0 0 5px #fff); }
+
+    #type { font-size: clamp(1rem, 3vw, 1.5rem); margin-top: 1rem; min-height: 2em; border-right: 2px solid white; white-space: nowrap; overflow: hidden; animation: blink-caret 0.8s step-end infinite; max-width: 90vw; }
+
+    @keyframes blink-caret { 0%, 50% { border-color: white; } 50.01%, 100% { border-color: transparent; } }
+
+    .buttons { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 600px; width: 90vw; }
+
+    a.button { flex: 1 1 180px; background-color: white; color: #2980b9; padding: 14px 24px; text-decoration: none; font-weight: 700; border-radius: 10px; box-shadow: 0 4px 8px rgb(0 0 0 / 0.2); transition: background-color 0.3s ease, transform 0.15s ease; user-select: none; font-size: 1.1rem; display: inline-block; }
+
+    a.button:hover, a.button:focus-visible { background-color: #d3e9ff; transform: translateY(-2px); outline: none; }
+
+    a.button:active { transform: translateY(0); background-color: #a7ceff; }
+
+    @media (max-width: 400px) { a.button { font-size: 1rem; padding: 12px 20px; } }
+  </style>
+  <!-- Basic Seo -->
+  <meta name="description" content="A clean and modern website for tutorials, guides, and projects. Learn coding, explore new tech, and grow your knowledge Ft Hacker Inc.">
+  <meta name="keywords" content="coding, tutorials, projects, web development, programming, guides, Portfolia, webiste, emonpersonal, emon. perosnal,">
+  <meta name="author" content="Emon Khan">
+  <!-- End Basic Seo-->
+  
+   <!-- Open Graph (for Facebook, LinkedIn, etc.) -->
+  <meta property="og:title" content="My Website - Learn, Explore, and Build">
+  <meta property="og:description" content="A clean and modern website for tutorials, guides, and projects.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emonpersonal.xyz/">
+  <meta property="og:image" content="https://emonpersonal.xyz/Portfolia/favicon.png">
+  <!-- End Open Graph (for Facebook, LinkedIn, etc.) -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K748CDQV"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <h1>🌟 Welcome!</h1>
+  <div id="type" aria-live="polite" aria-atomic="true"></div>
+
+  <nav class="buttons" aria-label="Main navigation">
+    <a href="/Portfolia/" class="button" role="button">Visit My Portfolio</a>
+    <a href="/Mineswpper" class="button" role="button">Mineswpper</a>
+    <a href="/terminal" class="button" role="button">Fake Linux Terminal</a>
+    <a href="/Python/" class="button" role="button">Python RoadMap</a>
+  </nav>
+
+  <script>
+    const text = "Hello, I'm Emon Khan.";
+    let i = 0;
+    const typingEl = document.getElementById('type');
+
+    function typing() {
+      if (i < text.length) {
+        typingEl.textContent += text.charAt(i);
+        i++;
+        setTimeout(typing, 100);
+      } else {
+        typingEl.style.borderRight = 'none';
+      }
+    }
+    typing();
+  </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fake AI Terminal</title>
+<style>
+  /* Terminal container */
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: #0a0a0a;
+    color: #33ff33;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #terminal {
+    background: #111;
+    width: 90vw;
+    max-width: 700px;
+    height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #00ff00aa;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #output {
+    flex: 1;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    padding-right: 5px;
+    margin-bottom: 10px;
+  }
+  .line {
+    margin: 0.2rem 0;
+  }
+  .prompt {
+    color: #33ff33;
+  }
+  .error {
+    color: #ff4444;
+  }
+  .info {
+    color: #66ccff;
+  }
+  .success {
+    color: #99ff99;
+  }
+
+  /* Input area */
+  #input-area {
+    display: flex;
+    align-items: center;
+  }
+  #prompt-label {
+    user-select: none;
+    color: #33ff33;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  #input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #33ff33;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    flex: 1;
+  }
+
+  /* Blinking cursor */
+  #input:focus {
+    border-bottom: 2px solid #33ff33;
+  }
+  /* Scrollbar for output */
+  #output::-webkit-scrollbar {
+    width: 8px;
+  }
+  #output::-webkit-scrollbar-thumb {
+    background: #0f0;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div id="terminal" role="main" aria-label="Fake AI command terminal">
+    <div id="output" aria-live="polite" aria-atomic="false"></div>
+    <div id="input-area">
+      <span id="prompt-label">user@fakeai:~$</span>
+      <input type="text" id="input" autocomplete="off" autofocus aria-describedby="prompt-label" aria-label="Command input" />
+    </div>
+  </div>
+
+<script>
+  const output = document.getElementById('output');
+  const input = document.getElementById('input');
+
+  // Command history and pointer
+  let history = [];
+  let historyIndex = -1;
+
+  // Define many commands with description and handler
+  const commands = {
+    help: {
+      description: 'List all available commands',
+      fn: () => {
+        const cmds = Object.keys(commands).sort().join(', ');
+        return `Available commands:\n${cmds}`;
+      }
+    },
+    hello: {
+      description: 'Greets the user',
+      fn: () => 'Hello! How can I assist you today?'
+    },
+    bye: {
+      description: 'Exit the terminal',
+      fn: () => 'Goodbye! Refresh the page to start again.'
+    },
+    clear: {
+      description: 'Clear the terminal screen',
+      fn: () => {
+        output.textContent = '';
+        return null;
+      }
+    },
+    date: {
+      description: 'Show current date and time',
+      fn: () => new Date().toString()
+    },
+    echo: {
+      description: 'Echo the input text',
+      fn: (args) => args.join(' ')
+    },
+    time: {
+      description: 'Show the current time',
+      fn: () => new Date().toLocaleTimeString()
+    },
+    joke: {
+      description: 'Tell a random joke',
+      fn: () => {
+        const jokes = [
+          "Why do programmers prefer dark mode? Because light attracts bugs!",
+          "Why do Java developers wear glasses? Because they don't see sharp.",
+          "There are 10 types of people: those who understand binary and those who don't.",
+          "Why did the computer get cold? Because it forgot to close its Windows.",
+          "Debugging: Being the detective in a crime movie where you are also the murderer."
+        ];
+        return jokes[Math.floor(Math.random() * jokes.length)];
+      }
+    },
+    ping: {
+      description: 'Ping a host',
+      fn: (args) => {
+        if(args.length === 0) return 'Usage: ping [host]';
+        return `Pinging ${args[0]} with 32 bytes of data:\nReply from ${args[0]}: bytes=32 time=12ms TTL=58\nReply from ${args[0]}: bytes=32 time=10ms TTL=58\nPing statistics for ${args[0]}:\n    Packets: Sent = 2, Received = 2, Lost = 0 (0% loss)`;
+      }
+    },
+    randomfact: {
+      description: 'Get a random tech fact',
+      fn: () => {
+        const facts = [
+          "The first computer bug was an actual bug (a moth) found in a Harvard Mark II in 1947.",
+          "The first domain name ever registered was symbolics.com in 1985.",
+          "JavaScript was created in just 10 days by Brendan Eich in 1995.",
+          "The first website is still online: info.cern.ch",
+          "Linux was created by Linus Torvalds in 1991 as a hobby."
+        ];
+        return facts[Math.floor(Math.random() * facts.length)];
+      }
+    },
+    whoami: {
+      description: 'Display current user',
+      fn: () => 'user@fakeai'
+    },
+    ls: {
+      description: 'List directory contents',
+      fn: () => 'Documents  Downloads  Projects  Resume.pdf'
+    },
+    helpme: {
+      description: 'Get detailed help about commands',
+      fn: () => 'Try commands like: help, hello, joke, date, time, ping, echo, clear, bye'
+    }
+  };
+
+  function printLine(text = '', className = 'line') {
+    const p = document.createElement('p');
+    p.textContent = text;
+    p.className = className;
+    output.appendChild(p);
+    output.scrollTop = output.scrollHeight;
+  }
+
+  function runCommand(inputText) {
+    const args = inputText.trim().split(' ').filter(Boolean);
+    if(args.length === 0) return;
+
+    const cmd = args[0].toLowerCase();
+    const cmdArgs = args.slice(1);
+
+    printLine(`user@fakeai:~$ ${inputText}`, 'prompt');
+
+    if(commands[cmd]) {
+      const result = commands[cmd].fn(cmdArgs);
+      if(result !== null) {
+        printLine(result, 'info');
+      }
+      if(cmd === 'bye') {
+        input.disabled = true;
+        input.placeholder = "Terminal session ended. Refresh to restart.";
+      }
+      if(cmd === 'clear') {
+        // Already cleared inside fn
+      }
+    } else {
+      printLine(`Command not found: ${cmd}`, 'error');
+      printLine(`Type 'help' to see available commands.`, 'info');
+    }
+  }
+
+  // Handle user input
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Enter') {
+      const val = input.value;
+      if(val.trim() !== '') {
+        history.push(val);
+        historyIndex = history.length;
+        runCommand(val);
+        input.value = '';
+      }
+    } else if(e.key === 'ArrowUp') {
+      if(history.length === 0) return;
+      if(historyIndex > 0) {
+        historyIndex--;
+        input.value = history[historyIndex];
+      }
+      e.preventDefault();
+    } else if(e.key === 'ArrowDown') {
+      if(history.length === 0) return;
+      if(historyIndex < history.length - 1) {
+        historyIndex++;
+        input.value = history[historyIndex];
+      } else {
+        historyIndex = history.length;
+        input.value = '';
+      }
+      e.preventDefault();
+    }
+  });
+
+  // Initial greeting
+  printLine("Fake AI Terminal v1.0");
+  printLine("Type 'help' to see all commands.");
+  printLine("");
+</script>
+</body>
+</html>
